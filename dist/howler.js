@@ -2313,7 +2313,9 @@
       return;
     }
 
-    if (/^data:[^;]+;base64,/.test(url)) {
+    if (url instanceof ArrayBuffer) {
+      decodeAudioData(url, self);
+    } else if (/^data:[^;]+;base64,/.test(url)) {
       // Decode the base64 data URI without XHR, since some browsers don't support it.
       var data = atob(url.split(',')[1]);
       var dataView = new Uint8Array(data.length);
